@@ -1,0 +1,35 @@
+package com.yousheng.app1.casclient1.filter;
+
+import com.yousheng.app1.casclient1.domain.ResultCode;
+import com.yousheng.app1.casclient1.domain.ResultJson;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+/**
+ * @author ：lq
+ * @date ：2020/3/6
+ * @time：21:59
+ */
+@Component
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    @Override
+    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        //验证为未登陆状态会进入此方法，认证错误
+        System.out.println("认证失败：" + authException.getMessage());
+        response.setStatus(200);
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter printWriter = response.getWriter();
+        String body = ResultJson.failure(ResultCode.UNAUTHORIZED, authException.getMessage()).toString();
+        printWriter.write(body);
+        printWriter.flush();
+    }
+}

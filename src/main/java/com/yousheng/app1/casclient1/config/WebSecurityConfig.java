@@ -116,7 +116,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registration.setFilter(new AuthenticationFilter());
         initParameters.put("casServerLoginUrl", configProps.getServerLoginUrl());
         initParameters.put("serverName", configProps.getClientHostUrl());
-
+        initParameters.put("ignorePattern", "/logout/success1");
         // 表示过滤所有
         registration.setInitParameters(initParameters);
         // 设定加载的顺序

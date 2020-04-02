@@ -16,6 +16,6 @@ public class CasLogout1 {
     @GetMapping("/logout1")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:https://www.uni.sso.com:8443/cas/logout?service=http://192.168.1.104:8088/logout/success1";
+        return "redirect:https://www.uni.sso.com:8443/cas/logout?service=http://192.168.0.36:8088/logout/success1";
     }
 }

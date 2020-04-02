@@ -28,6 +28,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * AuthenticationFilter 授权过滤器
+     * AuthenticationFilter 认证过滤器
      *
      * @return
      */
@@ -119,7 +120,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 表示过滤所有
         registration.setInitParameters(initParameters);
         // 设定加载的顺序
-        registration.setOrder(2);
+        registration.setOrder(1);
         return registration;
     }
 
@@ -139,9 +140,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         initParameters.put("casServerUrlPrefix", configProps.getServerUrlPrefix());
         initParameters.put("serverName", configProps.getClientHostUrl());
 
-        // 是否对serviceUrl进行编码，默认true：设置false可以在302对URL跳转时取消显示;jsessionid=xxx的字符串
-        // 观察CommonUtils.constructServiceUrl方法可以看到
-        initParameters.put("encodeServiceUrl", "false");
         registration.setInitParameters(initParameters);
         // 设定加载的顺序
         registration.setOrder(2);
@@ -207,7 +205,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) {
+    public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
                 .antMatchers(
@@ -219,6 +217,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.ttf"
                 );
         web.ignoring().antMatchers("/v2/api-docs","/index1");
+
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        //去掉";"黑名单
+        firewall.setAllowSemicolon(true);
+        //加入自定义的防火墙
+        web.httpFirewall(firewall);
+        super.configure(web);
     }
 
     @Bean

@@ -36,7 +36,7 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter {
             auth_token = auth_token.substring(auth_token_start.length());
         } else {
             // 不按规范,不允许通过验证
-            auth_token = "eyJhbGciOiJIUzI1NiIsInppcCI6IkRFRiJ9.eNoky7EOwiAYReF3uTMkUOCHspm4OOgrGIoQcWlTINE0fXdrXL-cs6H2CR5SjYIkCTU4MPSa1nt5wAuGGuclwW8IvT3ntbTPkZ_O18sNO0N6L_DSOOOssUQMJbQ_WDeqH7xaOQabHBkRIielM9dyMHzMMnCbJTlt8xSjwf4FAAD__w.tZuwp3jq9xTwZ6tQ81Sf6sjAhrkYxsKfMvVbJlJ2fIg";
+            auth_token = "eyJhbGciOiJIUzI1NiIsInppcCI6IkRFRiJ9.eNocy0sKwjAURuG9_OME7k3S9CYzwYkD3YLEPjBOWpoUlNK9Wzr9OGdDWV-IYBvIsydrBAprGZZn7hFJoXTTPCBuSGt9T0uuvyO_XO-3B3aF4TsjciPiWhZnFHKqJzTShhM-NR9DcnYcU0vacyDt-q7RQsZqFksjeSspeex_AAAA__8.chEVPrNqiTzpLbuqUUUjsVHhUFCUs8pA4DeabCU1TIM";
         }
 
         String username = jwtUtils.getUsernameFromToken(auth_token);

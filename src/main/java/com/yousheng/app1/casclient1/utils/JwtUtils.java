@@ -28,7 +28,7 @@ public class JwtUtils {
 
     private String secret="mySecret";
 
-    private Long access_token_expiration= 86400L;
+    private Long access_token_expiration= 86400L * 30;
 
     private Long refresh_token_expiration= 86400L;
 
